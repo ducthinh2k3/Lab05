@@ -1,0 +1,93 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+using namespace std;
+
+void printArray2D(bool** a, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+			cout << a[i][j] << " ";
+		cout << endl;
+	}
+}
+
+void printList(vector<vector<int>> list)
+{
+	for (int i = 0; i < list.size(); i++)
+	{
+		for (int j = 0; j < list[i].size(); j++)
+			cout << list[i][j] << " ";
+		cout << endl;
+	}
+}
+
+vector<vector<int>> readAdjacencyMatrix(const char* filename)
+{
+	vector<vector<int>> list(9);
+	fstream fin(filename, ios::in);
+	if (!fin)
+	{
+		cout << "Mo file khong thanh cong" << endl;
+		return list;
+	}
+	cout << "Mo file thanh cong" << endl;
+
+	int vertices = 0;
+	fin >> vertices;
+	int** matrix = new int* [vertices];
+
+	for (int i = 0; i < vertices; i++)
+	{
+		matrix[i] = new int[vertices];
+		for (int j = 0; j < vertices; j++)
+		{
+			fin >> matrix[i][j];
+		}
+	}
+	
+	//output the information of the corresponding Adjacency matrix
+	for (int m = 0; m < vertices; m++)
+	{
+		for (int n = 0; n < vertices; n++)
+		{
+			if (matrix[m][n] == 1)
+				list[m].push_back(n);
+		}
+	}
+
+	fin.close();
+	return list;
+}
+
+int** readAdjacencyList(const char* filename)
+{
+	fstream fin(filename, ios::in);
+	if (!fin)
+	{
+		cout << "Mo file khong thanh cong" << endl;
+		return;
+	}
+	cout << "Mo file thanh cong" << endl;
+
+	int vertices = 0;
+	fin >> vertices;
+	vector<vector<int>> list(vertices);
+	for (int i = 0; i < list.size(); i++)
+	{
+		string buffer;
+
+	}
+	
+	fin.close();
+}
+
+
+
+int main()
+{
+	const char* filename = "graph1.txt";
+	vector<vector<int>> list = readAdjacencyMatrix(filename);
+	printList(list);
+}
